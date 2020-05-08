@@ -36,17 +36,24 @@ def get_exif_rotation(orientation_num):
 
 def get_exif_orientation(img):
     exif=img._getexif()
-    
+
     exif_table={}
     for tag_id, value in exif.items():
         tag = TAGS.get(tag_id, tag_id)
         exif_table[tag] = str(value)
-    
-    return exif_table['Orientation']
+
+    try:
+        ret = exif_table['Orientation']
+        print('Orientation'+str(ret))
+    except:
+        ret = 0
+
+    return ret
 
 def get_rotation_image(img):
-    print ('Orientation: '+get_exif_orientation(img))
+    print ('Orientation: '+str(get_exif_orientation(img)))
     rotate,reverse = get_exif_rotation( int(get_exif_orientation(img)) )
+
     if reverse == 1:
         img = ImageOps.mirror(img)
     if rotate != 0:
@@ -61,11 +68,12 @@ def get_text_color(img,x,y):
         return (255,255,255)
 
 def draw_title(img,title):
-    font_file="fonts-japanese-gothic.ttf"
+#    font_file="fonts-japanese-gothic.ttf"
+    font_file="MonsieurLaDoulaise-Regular.ttf"
     font_size=45
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype(font_file, font_size)
-    text_color=get_text_color(img,10,10)
+    text_color=get_text_color(img,100,100)
     draw.text((10, 10), title, fill=text_color, font=font)
     return img
 
@@ -116,7 +124,7 @@ print('Resized size: '+ str(width) + ' ' + str(height) )
 
 # タイトルとシグニチャの描画
 if len(args)>2:
-    img = draw_title( img, args[2].decode('utf-8') )
+    img = draw_title( img, args[2] )
 img = draw_signiture( img, signiture )
 
 # 画像の保存
