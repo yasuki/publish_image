@@ -50,7 +50,7 @@ def get_exif_orientation(img):
 
     return ret
 
-# 加増を回転
+# 画像を回転
 def get_rotation_image(img):
     print ('Orientation: '+str(get_exif_orientation(img)))
     rotate,reverse = get_exif_rotation( int(get_exif_orientation(img)) )
@@ -79,8 +79,7 @@ def get_text_color(img,x,y):
 
 # タイトルを出力
 def draw_title(img,title):
-#    font_file="/home/terauchi/publish_image/TakaoPGothic.ttf"
-    font_file="/home/username/publish_image/fonts-japanese-gothic.ttf"
+    font_file="/home/user/publish_image/TakaoPGothic.ttf"
     font_size=45
     draw = ImageDraw.Draw(img)
     font = ImageFont.truetype(font_file, font_size)
@@ -90,7 +89,7 @@ def draw_title(img,title):
 
 # シグニチャを出力
 def draw_signiture(img,sig):
-    font_file="/home/username/publish_image/fonts-japanese-gothic.ttf"
+    font_file="/home/user/publish_image/TakaoPGothic.ttf"
     font_size=10
     width,height=img.size
     draw = ImageDraw.Draw(img)
